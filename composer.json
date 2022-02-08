@@ -1,0 +1,19 @@
+{
+    "name": "jezzdk/statamic-kontainer",
+    "autoload": {
+        "psr-4": {
+            "Jezzdk\\StatamicKontainer\\": "src"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Statamic Kontainer",
+            "description": "Statamic Kontainer addon"
+        },
+        "laravel": {
+            "providers": [
+                "Jezzdk\\StatamicKontainer\\ServiceProvider"
+            ]
+        }
+    }
+}
