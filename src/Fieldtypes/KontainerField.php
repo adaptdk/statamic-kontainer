@@ -1,12 +1,12 @@
 <?php
 
-namespace Jezzdk\StatamicSecret\Fieldtypes;
+namespace Jezzdk\StatamicKontainer\Fieldtypes;
 
 use Statamic\Fields\Fieldtype;
 
-class Kontainerield extends Fieldtype
+class KontainerField extends Fieldtype
 {
-    protected $icon = 'image';
+    protected $icon = 'assets';
 
     protected $categories = ['media'];
 
@@ -35,10 +35,6 @@ class Kontainerield extends Fieldtype
      */
     public function preProcess($data)
     {
-        if (empty($data)) {
-            return '';
-        }
-
         return $data;
     }
 
@@ -50,10 +46,6 @@ class Kontainerield extends Fieldtype
      */
     public function process($data)
     {
-        if (empty(trim($data))) {
-            return '';
-        }
-
         return $data;
     }
 
@@ -70,7 +62,6 @@ class Kontainerield extends Fieldtype
                 'instructions' => 'Type the full url to your Kontainer instance.',
                 'type' => 'text',
                 'default' => '',
-                'width' => 100
             ],
         ];
     }
