@@ -1,9 +1,9 @@
 # Statamic Kontainer
 
-![Statamic 3.0+](https://img.shields.io/badge/Statamic-3.0+-FF269E?style=for-the-badge&link=https://statamic.com)
+![Statamic 3.2+](https://img.shields.io/badge/Statamic-3.2+-FF269E?style=for-the-badge&link=https://statamic.com)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jezzdk/statamic-kontainer.svg?style=for-the-badge)](https://packagist.org/packages/jezzdk/statamic-kontainer)
 
-> Statamic Kontainer is a Statamic addon that adds a file picker for Kontainer  
+> Statamic Kontainer is a Statamic addon that adds a file picker for Kontainer
 
 ## Features
 
