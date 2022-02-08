@@ -1,5 +1,11 @@
 {
     "name": "jezzdk/statamic-kontainer",
+    "description": "A Statamic fieldtype.",
+    "keywords": [
+        "laravel",
+        "statamic"
+    ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Jezzdk\\StatamicKontainer\\": "src"
