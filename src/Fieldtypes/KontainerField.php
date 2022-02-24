@@ -65,4 +65,9 @@ class KontainerField extends Fieldtype
             ],
         ];
     }
+
+    public function preload()
+    {
+        return ['debug' => config('app.debug')];
+    }
 }

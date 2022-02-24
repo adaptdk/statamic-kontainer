@@ -55,6 +55,10 @@ export default {
 
             let imageData = JSON.parse(data.data)
 
+            if (this.meta.debug) {
+                console.log(this.fieldId, imageData)
+            }
+
             if (! imageData) {
                 this.$toast.error('Error parsing image data')
                 return
@@ -73,10 +77,7 @@ export default {
             this.url = imageData.url
             this.type = imageData.type
 
-            this.update({
-                url: imageData.url,
-                type: imageData.type
-            })
+            this.update(imageData)
         },
         remove () {
             this.url = null
