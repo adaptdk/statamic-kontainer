@@ -10,7 +10,7 @@
             </video>
         </div>
 
-        <button @click="openKontainer" class="btn">Browse</button>
+        <button @click="openKontainer" class="btn" v-text="value ? 'Edit' : 'Browse'"></button>
         <button v-if="url" @click="remove" class="btn text-red">Unlink</button>
     </div>
 </template>
@@ -23,6 +23,9 @@ export default {
         return {
             url: null,
             type: null,
+            fileId: null,
+            folderId: null,
+            token: null
         }
     },
 
@@ -30,7 +33,11 @@ export default {
         if (this.value) {
             this.url = this.value.url
             this.type = this.value.type
+            this.folderId = this.value.folderId
+            this.fileId = this.value.fileId
         }
+
+        this.token = this.makeid(32)
 
         window.addEventListener("message", this.receive, false)
     },
@@ -46,7 +53,20 @@ export default {
                 return
             }
 
-            window.open(this.config.kontainer_url + '?cmsMode=1', 'kontainer', 'width=1024,height=768,popup,toolbar=no,location=no')
+            // End the Kontainer URL with a trailing slash
+            let url = this.config.kontainer_url.replace(/\/?$/, '/')
+
+            if (this.folderId) {
+                url += 'folder/' + this.folderId + '/'
+            }
+
+            if (this.fileId) {
+                url += 'file/' + this.fileId + '/'
+            }
+
+            url += '?cmsMode=1&cmsToken=' + this.token
+
+            window.open(url, 'kontainer', 'width=1024,height=768,popup,toolbar=no,location=no')
         },
         receive (data) {
             if (! (new RegExp('kontainer\.com')).test(data.origin)) {
@@ -74,16 +94,35 @@ export default {
                 return
             }
 
+            if (imageData.token !== this.token) {
+                return
+            }
+
             this.url = imageData.url
             this.type = imageData.type
+            this.folderId = imageData.folderId
+            this.fileId = imageData.fileId
 
             this.update(imageData)
         },
         remove () {
             this.url = null
             this.type = null
+            this.folderId = null
+            this.fileId = null
 
             this.update(null)
+        },
+        makeid (length) {
+            let result = '';
+            let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+
+            return result;
         }
     }
 };
