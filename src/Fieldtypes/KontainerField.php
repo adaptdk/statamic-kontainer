@@ -58,10 +58,25 @@ class KontainerField extends Fieldtype
     {
         return [
             'kontainer_url' => [
-                'display' => 'Kontainer URL',
-                'instructions' => 'Type the full url to your Kontainer instance.',
+                'display' => __('Kontainer URL'),
+                'instructions' => __('Type the full url to your Kontainer instance.'),
                 'type' => 'text',
                 'default' => '',
+                'width' => 50,
+            ],
+            'allow_type' => [
+                'display' => __('Allowed file types'),
+                'instructions' => __('Select which file types to allow.'),
+                'type' => 'select',
+                'default' => 'all',
+                'width' => 50,
+                'searchable' => false,
+                'options' => [
+                    'all' => __('All'),
+                    'images' => __('Images'),
+                    'videos' => __('Videos'),
+                    'files' => __('Files'),
+                ]
             ],
         ];
     }
