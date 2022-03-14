@@ -87,7 +87,7 @@ export default {
             window.open(url, 'kontainer', 'width='+this.popupWidth+',height='+this.popupHeight+',top='+this.popupTop+',left='+this.popupLeft+',popup')
         },
         receive (data) {
-            if (! (new RegExp('kontainer\.com')).test(data.origin)) {
+            if (! this.config.kontainer_url.includes(data.origin)) {
                 return
             }
 
