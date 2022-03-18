@@ -20,8 +20,8 @@
             </div>
         </div>
 
-        <button @click="openKontainer" class="btn" v-text="value ? __('Edit') : __('Browse')"></button>
-        <button v-if="url" @click="remove" class="btn text-red" v-text="__('Unlink')"></button>
+        <button :disabled="config.read_only" @click="openKontainer" class="btn" v-text="value ? __('Edit') : __('Browse')"></button>
+        <button :disabled="config.read_only" v-if="url" @click="remove" class="btn text-red" v-text="__('Unlink')"></button>
     </div>
 </template>
 
