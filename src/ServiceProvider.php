@@ -6,8 +6,12 @@ use Statamic\Providers\AddonServiceProvider;
 
 class ServiceProvider extends AddonServiceProvider
 {
-    protected $scripts = [
-        __DIR__ . '/../dist/js/statamic-kontainer.js',
+    protected $vite = [
+        'input' => [
+            'resources/js/addon.js',
+            'resources/css/addon.css',
+        ],
+        'publicDirectory' => 'dist',
     ];
 
     protected $fieldtypes = [
