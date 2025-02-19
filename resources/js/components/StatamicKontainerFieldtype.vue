@@ -9,7 +9,7 @@
                 {{ __('Sorry, your browser doesn\'t support embedded videos.') }}
             </video>
         </div>
-        <div v-if="type === 'file' && url" class="flex items-center text-sm text-gray-800 bg-gray-100 border border-gray-400 rounded p-2 mb-2">
+        <div v-if="(type === 'file' || type === 'vector') && url" class="flex items-center text-sm text-gray-800 bg-gray-100 border border-gray-400 rounded p-2 mb-2">
             <div class="flex-none w-4 h-4 mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="block">
                     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M23.25 9.9 12.273 20.878a6.75 6.75 0 0 1-9.546-9.546l9.016-9.015a4.5 4.5 0 1 1 6.363 6.363L9.091 17.7a2.25 2.25 0 0 1-3.182-3.181L14.925 5.5"/>
