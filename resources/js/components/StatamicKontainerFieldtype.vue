@@ -114,7 +114,7 @@ export default {
                 return
             }
 
-            if (! ['image', 'video', 'file'].includes(imageData.type)) {
+            if (! ['image', 'video', 'file', 'vector'].includes(imageData.type)) {
                 this.$toast.error(__('Unknown type'))
                 return
             }
@@ -131,6 +131,11 @@ export default {
 
             if (this.config.allow_type === 'files' && imageData.type !== 'file') {
                 this.$toast.error(__('Only files allowed'))
+                return
+            }
+
+            if (this.config.allow_type === 'vector' && imageData.type !== 'vector') {
+                this.$toast.error(__('Only vector allowed'))
                 return
             }
 
