@@ -76,6 +76,7 @@ class KontainerField extends Fieldtype
                     'images' => __('Images'),
                     'videos' => __('Videos'),
                     'files' => __('Files'),
+                    'vectors' => __('Vectors'),
                 ]
             ],
         ];

@@ -134,7 +134,7 @@ export default {
                 return
             }
 
-            if (this.config.allow_type === 'vector' && imageData.type !== 'vector') {
+            if (this.config.allow_type === 'vectors' && imageData.type !== 'vector') {
                 this.$toast.error(__('Only vector allowed'))
                 return
             }
