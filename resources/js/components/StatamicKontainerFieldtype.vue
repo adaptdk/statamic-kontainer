@@ -1,32 +1,35 @@
 <template>
     <div>
-        <div v-if="type === 'image' && url" class="mb-2">
-            <a :href="url" target="_blank" class="inline-block"><img :src="url + '?w=300&h=300'"></a>
+        <div v-if="type === 'image' && url" class="kontainer-preview">
+            <a :href="url" target="_blank"><img :src="url + '?w=300&h=300'"></a>
         </div>
-        <div v-if="type === 'video' && url" class="mb-2">
+        <div v-if="type === 'video' && url" class="kontainer-preview">
             <video controls width="300">
                 <source :src="url" type="video/mp4">
                 {{ __('Sorry, your browser doesn\'t support embedded videos.') }}
             </video>
         </div>
-        <div v-if="(type === 'file' || type === 'vector' || type === 'document') && url" class="flex items-center text-sm text-gray-800 bg-gray-100 border border-gray-400 rounded p-2 mb-2">
-            <div class="flex-none w-4 h-4 mr-1">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="block">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M23.25 9.9 12.273 20.878a6.75 6.75 0 0 1-9.546-9.546l9.016-9.015a4.5 4.5 0 1 1 6.363 6.363L9.091 17.7a2.25 2.25 0 0 1-3.182-3.181L14.925 5.5"/>
-                </svg>
-            </div>
-            <div>
-                <a :href="url" target="_blank">{{ url }}</a>
-            </div>
+        <div v-if="(type === 'file' || type === 'vector' || type === 'document') && url" class="kontainer-preview kontainer-file">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="kontainer-file-icon">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M23.25 9.9 12.273 20.878a6.75 6.75 0 0 1-9.546-9.546l9.016-9.015a4.5 4.5 0 1 1 6.363 6.363L9.091 17.7a2.25 2.25 0 0 1-3.182-3.181L14.925 5.5"/>
+            </svg>
+            <a :href="url" target="_blank">{{ url }}</a>
         </div>
-        <button :disabled="config.read_only" @click="openKontainer" class="btn" v-text="value ? __('Edit') : __('Browse')"></button>
-        <button :disabled="config.read_only" v-if="url" @click="remove" class="btn !text-red-400" v-text="__('Unlink')"></button>
+        <div class="kontainer-actions">
+            <Button :disabled="config.read_only" @click="openKontainer" :text="value ? __('Edit') : __('Browse')" />
+            <Button v-if="url" :disabled="config.read_only" @click="remove" variant="danger" :text="__('Unlink')" />
+        </div>
     </div>
 </template>
 
 <script>
+import { FieldtypeMixin as Fieldtype } from '@statamic/cms';
+import { Button } from '@statamic/cms/ui';
+
 export default {
     mixins: [Fieldtype],
+
+    components: { Button },
 
     data () {
         return {
@@ -59,14 +62,14 @@ export default {
         window.addEventListener("message", this.receive, false)
     },
 
-    destroyed () {
+    unmounted () {
         window.removeEventListener("message", this.receive, false)
     },
 
     methods: {
         openKontainer () {
             if (! this.config.kontainer_url) {
-                this.$toast.error(__('Kontainer URL is missing'))
+                Statamic.$toast.error(__('Kontainer URL is missing'))
                 return
             }
 
@@ -101,12 +104,12 @@ export default {
             }
 
             if (! imageData) {
-                this.$toast.error(__('Error parsing image data'))
+                Statamic.$toast.error(__('Error parsing image data'))
                 return
             }
 
             if (! imageData.url) {
-                this.$toast.error(__('Invalid URL'))
+                Statamic.$toast.error(__('Invalid URL'))
                 return
             }
 
@@ -115,32 +118,32 @@ export default {
             }
 
             if (! ['image', 'video', 'file', 'vector', 'document'].includes(imageData.type)) {
-                this.$toast.error(__('Unknown type'))
+                Statamic.$toast.error(__('Unknown type'))
                 return
             }
 
             if (this.config.allow_type === 'images' && imageData.type !== 'image') {
-                this.$toast.error(__('Only images allowed'))
+                Statamic.$toast.error(__('Only images allowed'))
                 return
             }
 
             if (this.config.allow_type === 'videos' && imageData.type !== 'video') {
-                this.$toast.error(__('Only videos allowed'))
+                Statamic.$toast.error(__('Only videos allowed'))
                 return
             }
 
             if (this.config.allow_type === 'files' && imageData.type !== 'file') {
-                this.$toast.error(__('Only files allowed'))
+                Statamic.$toast.error(__('Only files allowed'))
                 return
             }
 
             if (this.config.allow_type === 'vectors' && imageData.type !== 'vector') {
-                this.$toast.error(__('Only vectors allowed'))
+                Statamic.$toast.error(__('Only vectors allowed'))
                 return
             }
 
             if (this.config.allow_type === 'documents' && imageData.type !== 'document') {
-                this.$toast.error(__('Only documents allowed'))
+                Statamic.$toast.error(__('Only documents allowed'))
                 return
             }
 
@@ -173,3 +176,19 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.kontainer-preview { margin-bottom: 0.5rem; }
+.kontainer-preview a { display: inline-block; }
+.kontainer-file {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--color-gray-300, #d1d5db);
+    border-radius: 0.375rem;
+}
+.kontainer-file-icon { flex: none; width: 1rem; height: 1rem; }
+.kontainer-actions { display: flex; gap: 0.5rem; }
+</style>
